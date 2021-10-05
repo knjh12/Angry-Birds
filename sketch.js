@@ -1,47 +1,26 @@
-var retFixo, retMovendo;
-
-function setup() {
-  createCanvas(1200,800);
-  retFixo = createSprite(600,100,50,80);
-  retFixo.shapeColor = "green";
-  retFixo.debug = "true";
-  retMovendo = createSprite(600,600,80,30);
-  retMovendo.shapeColor= "green";
-  retMovendo.debug = "true";
+const Engine = Matter.Engine;
+const World= Matter.World;
+const Bodies = Matter.Bodies;
 
 
-  retFixo.velocityY = 5;
-  retMovendo.velocityY = -5;
+var engine, world;
+var caixa1, caixa2, ground;
 
-  obj1 = createSprite(100,200,50,50);
-  obj1.shapeColor = "green";
-  obj2 = createSprite(200,200,50,50);
-  obj2.shapeColor = "green";
-  obj3 = createSprite(300,200,50,50);
-  obj3.shapeColor = "green";
-  obj4 = createSprite(400,200,50,50);
-  obj4.shapeColor = "green";
+function setup(){
+    var canvas = createCanvas(400,400);
+    engine = Engine.create();
+    world = engine.world;
 
+    caixa1 = new Box(200,300,50,50);
+    caixa2 = new Box(240,100,50,100);
+    ground = new Ground(200,390,400,20);
 }
 
-function draw() {
-  background(255,255,255);  
+function draw(){
+    background(0);
+    Engine.update(engine);
 
-
-  if(isTouching(retMovendo, obj1)){
-    retMovendo.shapeColor = "blue";
-    obj1.shapeColor = "blue";
-  }
-  else {
-    retMovendo.shapeColor = "green";
-    obj1.shapeColor = "green";
-  }
-
-  bounceOff(retMovendo,retFixo);
-
-  retMovendo.x = World.mouseX;
-  retMovendo.y = World.mouseY;
-
-  drawSprites();
+    caixa1.display();
+    caixa2.display();
+    ground.display();
 }
-
